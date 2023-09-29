@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: rgb(238, 238, 238);
+}
+.inp{
+	border: none;
+	border: 1px solid gray;
+	font-size: 25px;
+	padding: 10px;
+	margin: 5px;
+	border-radius: 3px;
+}
+.container{
+	position: fixed;
+	display: flex;
+	flex-flow: row;
+	bottom: 1px;
+	right: 1px;
+	padding: 15px;
+}
+.in-div{
+	position: fixed;
+	right: 1px;
+	bottom: 0px;
+	display: flex;
+	flex-flow: column;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 2px;
+	box-shadow: 0px 0px 20px darkgray;
+}
+.in-div textarea{
+	border: none;
+	border:1px solid lightgray;
+	padding: 10px;
+	border-radius: 3px;
+	margin-bottom: 5px;
+}
+.btn{
+	padding: 10px;
+	background: rgb(5, 56, 78);
+	border: none;
+	color:white;
+	box-shadow: 0px 0px 5px darkgray;
+	text-shadow: 1px 1px 1px black;
+	border-radius: 3px;
+}
+.btn:hover{
+	cursor: pointer;
+	background: rgb(1, 25, 36);
+}
+.processing{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding: 10px;
+	background: rgb(3, 4, 73);
+	box-shadow: 1px 1px 2px #c2c2c2;
+	font-family: 'Montserrat';
+}
+.canvases{
+	display: flex;
+	flex-flow: row;
+}
+.btn-float{
+		position: fixed;
+		 right: 1%;
+		 top: 10%;
+	
+	padding: 15px;
+}
+.btn2{
+	padding: 10px;
+	width: 40px;
+	background: #05384e;
+	 text-decoration:none;
+	border: none;
+	color:white;
+	box-shadow: 0px 0px 5px darkgray;
+	text-shadow: 1px 1px 1px black;
+	border-radius: 10%;
+
+}

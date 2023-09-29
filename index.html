@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!-- CSS only --> 
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <!-- CSS only -->
+  </head>
+
+  <body>
+    <div class="canvases">
+      <div class="btn-float">
+        <form action="listado.html" class="" method="GET">
+          <input class="invisible" type="text" name="dni2" id="dni2">
+          <br>
+          <input type="submit" class="btn " value="Historial +">
+
+        </form>
+        
+       
+      </div>
+      <div id="k-container"></div>
+      &nbsp;
+      <canvas id="back">as</canvas>
+    </div>
+    <div id="qrcode" style="display: none"></div>
+
+    <div id="toolbar" class="container" style="margin: 10px">
+      <div class="in-div">
+        <form id="frm">
+          <label for="">Secreataria</label>
+          <input type="checkbox" id="isSecre" />
+          <br />
+          <textarea
+            type="text"
+            id="dni"
+            name="dni"
+            placeholder="Cedula"
+          ></textarea>
+          <br />
+          <textarea
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nombre"
+          ></textarea>
+          <br />
+          <textarea
+            type="text"
+            id="dependence"
+            name="dependence"
+            placeholder="Dependencia"
+          ></textarea>
+          <br />
+          <textarea
+            type="text"
+            id="charge"
+            name="charge"
+            placeholder="Cargo"
+          ></textarea>
+        </form>
+        <br />
+        <button class="btn" id="getData">Buscar</button>
+        <br />
+        <button class="btn" id="img-to-top">Imagen al frente</button>
+        <br />
+        <button class="btn" id="download">Descargar</button>
+      </div>
+    </div>
+  </body>
+  <!-- JavaScript Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript" src="./js/konva.min.js"></script>
+  <script type="text/javascript" src="./js/qrcode.min.js"></script>
+  <script type="text/javascript" src="./js/controller.js"></script>
+  <script type="text/javascript" src="./js/jspdf.min.js"></script>
+  <!-- JavaScript Bundle with Popper -->
+</html>
