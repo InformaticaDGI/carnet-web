@@ -4,19 +4,19 @@
     <meta charset="utf-8" />
     <title></title>
     <!-- CSS only --> 
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <!-- CSS only -->
   </head>
 
   <body>
     <div class="canvases">
       <div class="btn-float">
-        <form action="listado.html" class="" method="GET">
+        <form action="../historial/src/index.html" class="" method="GET">
           <input class="invisible" type="text" name="dni2" id="dni2">
           <br>
-          <input type="submit" class="btn " value="Historial +">
+          <input type="submit" class="btn mt-3" value="Historial +">
 
         </form>
         
@@ -68,6 +68,8 @@
         <button class="btn" id="img-to-top">Imagen al frente</button>
         <br />
         <button class="btn" id="download">Descargar</button>
+        <br>
+        <button class="btn btn-primary" id="logout">Cerrar Sesión</button>
       </div>
     </div>
   </body>
@@ -77,9 +79,10 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
   ></script>
-  <script type="text/javascript" src="./js/konva.min.js"></script>
-  <script type="text/javascript" src="./js/qrcode.min.js"></script>
-  <script type="text/javascript" src="./js/controller.js"></script>
-  <script type="text/javascript" src="./js/jspdf.min.js"></script>
+  <script type="text/javascript" src="js/konva.min.js"></script>
+  <script type="text/javascript" src="js/qrcode.min.js"></script>
+  <script type="text/javascript" src="js/controller.js"></script>
+  <script type="text/javascript" src="js/jspdf.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <!-- JavaScript Bundle with Popper -->
 </html>
