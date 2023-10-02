@@ -377,7 +377,7 @@ function setQrCode(dni) {
   }, 10)
 
   var canvas = document.getElementById("back")
-  ctx = canvas.getContext("2d")
+  ctx = canvas.getContext("2d", { willReadFrequently: true })
 
   qr64.onload = function (e) {
     ctx.drawImage(qr64, 88, 174)
@@ -386,7 +386,7 @@ function setQrCode(dni) {
 
 function loadBackImage() {
   var canvas = document.getElementById("back"),
-    ctx = canvas.getContext("2d")
+    ctx = canvas.getContext("2d", { willReadFrequently: true })
   canvas.width = 638
   canvas.height = 1004
 
@@ -452,4 +452,4 @@ document.getElementById("logout").addEventListener("click", function name(e) {
   const { logout } = useAuth();
   logout();
 })
-useSinginNeeded();
+//useSinginNeeded();
