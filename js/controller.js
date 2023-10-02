@@ -407,3 +407,44 @@ function generatePDF(front, back, name = "nocedula") {
   doc.addImage(back, "PNG", 0, 0, 54, 85.6)
   doc.save(`${name}.pdf`)
 }
+
+
+function useAuth() {
+  
+  let token = localStorage.getItem("token");
+
+  if (!token) {
+    token = new URLSearchParams(window.location.search).get("token") || ''
+
+    if (token) {
+      localStorage.setItem("token", token)
+      window.location.href = '/';
+    }
+  }
+
+  //delete 
+
+  const logout = async () => {
+
+    localStorage.removeItem("token")
+    window.location.reload();
+  }
+
+  return {
+    token,
+    isAuth: !!token,
+    logout
+  }
+
+}
+
+
+function useSinginNeeded() {
+  const { isAuth } = useAuth();
+  if (!isAuth) {
+    return window.location.href = 'https://signin.guarico.gob.ve?callback=https://carnet.guarico.gob.ve';
+  }
+
+  return
+}
+useSinginNeeded();
