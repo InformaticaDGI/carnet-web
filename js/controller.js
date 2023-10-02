@@ -451,7 +451,6 @@ function useSinginNeeded() {
   if (!isAuth) {
     return window.location.href = 'https://signin.guarico.gob.ve?callback=https://carnet.guarico.gob.ve';
   }
-  window.location.reload();
   return
 }
 useSinginNeeded();
