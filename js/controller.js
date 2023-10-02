@@ -450,11 +450,7 @@ function useSinginNeeded() {
 
 document.getElementById("logout").addEventListener("click", function name(e) {
 
-  localStorage.removeItem("token")
-  window.location.reload();
-
-
-  //const { logout } = useAuth();
-  //logout();
+  const { logout } = useAuth();
+  logout();
 })
 useSinginNeeded();
