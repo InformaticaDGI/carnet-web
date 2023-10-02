@@ -449,7 +449,6 @@ function useSinginNeeded() {
 }
 
 document.getElementById("logout").addEventListener("click", function name(e) {
-
   const { logout } = useAuth();
   logout();
 })
