@@ -377,7 +377,7 @@ function setQrCode(dni) {
   }, 10)
 
   var canvas = document.getElementById("back")
-  ctx = canvas.getContext("2d", { willReadFrequently: true })
+  ctx = canvas.getContext("2d")
 
   qr64.onload = function (e) {
     ctx.drawImage(qr64, 88, 174)
@@ -386,7 +386,7 @@ function setQrCode(dni) {
 
 function loadBackImage() {
   var canvas = document.getElementById("back"),
-    ctx = canvas.getContext("2d", { willReadFrequently: true })
+    ctx = canvas.getContext("2d")
   canvas.width = 638
   canvas.height = 1004
 
@@ -438,18 +438,19 @@ function useAuth() {
 
 }
 
+  document.getElementById("logout").addEventListener("click", function (e){
+    const { logout } = useAuth();
+    logout();
+  })
+
+
 
 function useSinginNeeded() {
   const { isAuth } = useAuth();
   if (!isAuth) {
     return window.location.href = 'https://signin.guarico.gob.ve?callback=https://carnet.guarico.gob.ve';
   }
-
+  window.location.reload();
   return
 }
-
-document.getElementById("logout").addEventListener("click", function name(e) {
-  const { logout } = useAuth();
-  logout();
-})
 //useSinginNeeded();
