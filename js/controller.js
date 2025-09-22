@@ -208,6 +208,10 @@ window.onload = () => {
     stage.get("#photo-layer").draw()
     layer.draw()
   })
+
+  document.getElementById("camera-capture").addEventListener("click", function (e) {
+    captureFromCamera()
+  })
 }
 
 function newText(
@@ -452,4 +456,271 @@ function useSinginNeeded() {
 
   return
 }
-useSinginNeeded();
+
+/**
+ * Camera capture function
+ * Opens device camera in inline preview box
+ */
+function captureFromCamera() {
+  const cameraContainer = document.getElementById('camera-container');
+  const cameraPreview = document.getElementById('camera-preview');
+  const captureBtn = document.getElementById('capture-photo');
+  const stopBtn = document.getElementById('stop-camera');
+  
+  // Show camera container
+  cameraContainer.style.display = 'block';
+  
+  // Request camera access
+  navigator.mediaDevices.getUserMedia({ 
+    video: { 
+      width: { ideal: 640 },
+      height: { ideal: 480 },
+      facingMode: 'user' // Front camera
+    } 
+  })
+  .then(stream => {
+    cameraPreview.srcObject = stream;
+    cameraPreview.play();
+    
+    // Apply horizontal flip to camera preview to avoid mirror effect
+    cameraPreview.style.transform = 'scaleX(-1)';
+    
+    // Capture photo function
+    const capturePhoto = () => {
+      console.log('Starting photo capture...');
+      
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const bgColorSelect = document.getElementById('bg-color');
+      const selectedBgColor = bgColorSelect ? bgColorSelect.value : 'transparent';
+      
+      console.log('Selected background color:', selectedBgColor);
+      
+      // Set canvas dimensions to match video
+      canvas.width = cameraPreview.videoWidth;
+      canvas.height = cameraPreview.videoHeight;
+      
+      console.log('Canvas dimensions:', canvas.width, 'x', canvas.height);
+      
+      // Draw video frame to canvas first (flip back to normal orientation)
+      context.save();
+      context.scale(-1, 1);
+      context.drawImage(cameraPreview, -canvas.width, 0, canvas.width, canvas.height);
+      context.restore();
+      
+      // If background color is selected, apply background replacement
+      if (selectedBgColor !== 'transparent') {
+        console.log('Applying background replacement...');
+        applyBackgroundReplacement(canvas, context, selectedBgColor);
+      }
+      
+      // Convert canvas to blob
+      canvas.toBlob(blob => {
+        console.log('Canvas converted to blob, size:', blob.size);
+        
+        // Create object URL from blob
+        const imageUrl = URL.createObjectURL(blob);
+        
+        // Load the captured image into the photo system
+        loadCapturedImage(imageUrl);
+        
+        // Stop camera and hide container
+        stopCamera();
+      }, 'image/jpeg', 0.8);
+    };
+    
+    // Stop camera function
+    const stopCamera = () => {
+      // Stop camera stream
+      stream.getTracks().forEach(track => track.stop());
+      
+      // Hide camera container
+      cameraContainer.style.display = 'none';
+      
+      // Clear video source
+      cameraPreview.srcObject = null;
+    };
+    
+    // Event listeners
+    captureBtn.onclick = capturePhoto;
+    stopBtn.onclick = stopCamera;
+    
+    // Also allow capturing with Enter key when camera is active
+    const handleKeyPress = (e) => {
+      if (cameraContainer.style.display === 'block') {
+        if (e.key === 'Enter') {
+          capturePhoto();
+        } else if (e.key === 'Escape') {
+          stopCamera();
+        }
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyPress);
+    
+    // Store cleanup function for later use
+    window.cameraCleanup = () => {
+      document.removeEventListener('keydown', handleKeyPress);
+      stopCamera();
+    };
+  })
+  .catch(error => {
+    console.error('Error accessing camera:', error);
+    alert('No se pudo acceder a la cámara. Por favor, asegúrate de que tienes permisos de cámara habilitados.');
+    
+    // Hide camera container on error
+    cameraContainer.style.display = 'none';
+  });
+}
+
+/**
+ * Apply background replacement to captured image
+ * @param {HTMLCanvasElement} canvas - Canvas element
+ * @param {CanvasRenderingContext2D} context - Canvas context
+ * @param {string} bgColor - Background color to apply
+ */
+function applyBackgroundReplacement(canvas, context, bgColor) {
+  try {
+    // Get image data
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    // Convert background color to RGB
+    const bgRgb = hexToRgb(bgColor);
+    
+    // Simple background replacement algorithm
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const a = data[i + 3];
+      
+      // Skip transparent pixels
+      if (a === 0) continue;
+      
+      // Simple background detection
+      const isBackground = isLikelyBackground(r, g, b);
+      
+      if (isBackground) {
+        data[i] = bgRgb.r;     // Red
+        data[i + 1] = bgRgb.g; // Green
+        data[i + 2] = bgRgb.b; // Blue
+        // Keep original alpha
+      }
+    }
+    
+    // Put modified image data back
+    context.putImageData(imageData, 0, 0);
+  } catch (error) {
+    console.error('Error applying background replacement:', error);
+    // If background replacement fails, just continue with original image
+  }
+}
+
+/**
+ * Convert hex color to RGB
+ * @param {string} hex - Hex color string
+ * @returns {Object} RGB object
+ */
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : { r: 255, g: 255, b: 255 };
+}
+
+/**
+ * Simple background detection algorithm
+ * @param {number} r - Red value
+ * @param {number} g - Green value
+ * @param {number} b - Blue value
+ * @returns {boolean} True if likely background
+ */
+function isLikelyBackground(r, g, b) {
+  // This is a simple heuristic - adjust thresholds as needed
+  // Look for light colors that are typical of backgrounds
+  
+  // Check for very light colors (close to white)
+  if (r > 220 && g > 220 && b > 220) return true;
+  
+  // Check for neutral grays
+  const avg = (r + g + b) / 3;
+  const maxDiff = Math.max(Math.abs(r - avg), Math.abs(g - avg), Math.abs(b - avg));
+  if (avg > 200 && maxDiff < 40) return true;
+  
+  // Check for light blue/green tints (common in webcam backgrounds)
+  if (r < 160 && g > 200 && b > 200) return true;
+  
+  // Check for light yellow/beige tones
+  if (r > 200 && g > 200 && b < 180) return true;
+  
+  return false;
+}
+
+/**
+ * Load captured image into the photo system
+ * @param {string} imageUrl - URL of the captured image
+ */
+function loadCapturedImage(imageUrl) {
+  console.log('Loading captured image:', imageUrl);
+  
+  // Get the current stage
+  const stage = Konva.stages[0]; // Assuming there's only one stage
+  
+  if (!stage) {
+    console.error('No stage found');
+    return;
+  }
+  
+  console.log('Stage found, proceeding with image load...');
+  
+  // Remove existing photo layer if it exists
+  if (stage.get("#photo-layer").length > 0) {
+    stage.get("#photo-layer").destroy();
+  }
+  
+  // Create new photo layer
+  const layer = new Konva.Layer({
+    id: "photo-layer",
+  });
+  
+  const imageObj = new Image();
+  
+  imageObj.onload = function () {
+    const photo = new Konva.Image({
+      id: "photo",
+      x: 170,
+      y: 360,
+      image: imageObj,
+      width: 300,
+      height: 380,
+      draggable: true,
+      opacity: 0.5,
+    });
+    
+    const tr = new Konva.Transformer({
+      visible: true,
+      rotateEnabled: true,
+      padding: 5,
+      id: "tr-photo",
+    });
+    
+    tr.attachTo(photo);
+    layer.add(photo);
+    layer.add(tr);
+    stage.add(layer);
+    
+    // Move photo layer to top and show transformer
+    stage.get("#photo-layer").moveToTop();
+    stage.get("#tr-photo").show();
+    stage.get("#photo").opacity(0.5);
+    stage.get("#photo-layer").draw();
+    stage.get("#main-layer").draw();
+  };
+  
+  imageObj.src = imageUrl;
+}
+
+// useSinginNeeded();

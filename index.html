@@ -67,6 +67,37 @@
         <br />
         <button class="btn" id="img-to-top">Imagen al frente</button>
         <br />
+        
+        <!-- Camera Preview Box -->
+        <div id="camera-container" style="display: none; margin: 10px 0; border: 2px solid #007bff; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+          <div style="text-align: center; margin-bottom: 10px;">
+            <strong>📷 Cámara</strong>
+          </div>
+          
+          <!-- Background Color Selector -->
+          <div style="margin-bottom: 10px; text-align: center;">
+            <label for="bg-color" style="font-size: 12px; margin-right: 5px;">Fondo:</label>
+            <select id="bg-color" style="padding: 2px 5px; border-radius: 3px; border: 1px solid #ccc;">
+              <option value="transparent">Original</option>
+              <option value="#ffffff">Blanco</option>
+              <option value="#f0f0f0">Gris Claro</option>
+              <option value="#e0e0e0">Gris</option>
+              <option value="#000000">Negro</option>
+              <option value="#0066cc">Azul</option>
+              <option value="#cc0000">Rojo</option>
+              <option value="#00cc00">Verde</option>
+            </select>
+          </div>
+          
+          <video id="camera-preview" style="width: 100%; max-width: 300px; height: 200px; background: #000; border-radius: 4px;"></video>
+          <div style="text-align: center; margin-top: 10px;">
+            <button class="btn btn-success" id="capture-photo" style="margin-right: 10px;">Capturar</button>
+            <button class="btn btn-secondary" id="stop-camera">Cerrar</button>
+          </div>
+        </div>
+        
+        <button class="btn" id="camera-capture">📷 Tomar Foto</button>
+        <br />
         <button class="btn" id="download">Descargar</button>
         <br />
         <button class="btn" id="logout">Cerrar Sesión</button>
