@@ -1,4 +1,5 @@
 const HOST = "https://api-carnet.guarico.gob.ve/"
+const color = "black"
 
 window.onload = () => {
   loadBackImage()
@@ -41,7 +42,8 @@ window.onload = () => {
     xpos: 200,
     layer: layer,
     size: 25,
-    color: "white",
+    color: color,
+    fontStyle: '700'
   })
   var textName = newText({
     id: "name",
@@ -49,8 +51,9 @@ window.onload = () => {
     xpos: 200,
     layer: layer,
     size: 25,
-    color: "white",
-    align: 'left'
+    color: color,
+    align: 'center',
+    fontStyle: '700'
   })
   var textCharge = newText({
     id: "charge",
@@ -58,7 +61,9 @@ window.onload = () => {
     xpos: 200,
     layer: layer,
     size: 25,
-    color: "white"
+    color: color,
+    align: 'center',
+    fontStyle: '600'
   })
   var textDependence = newText({
     id: "dependence",
@@ -66,7 +71,9 @@ window.onload = () => {
     xpos: 200,
     layer: layer,
     size: 25,
-    color: "white"
+    color: color,
+    align: 'center',
+    fontStyle: '600'
   })
 
   /**
@@ -223,7 +230,8 @@ function newText(
     text: "",
     size: 35,
     color: "black",
-    align: 'center'
+    align: 'center',
+    fontStyle: '400'
   }
 ) {
   var text = new Konva.Text({
@@ -236,6 +244,7 @@ function newText(
     align: params.align,
     draggable: true,
     id: params.id,
+    fontStyle: params.fontStyle
   })
 
   var tr = new Konva.Transformer({
