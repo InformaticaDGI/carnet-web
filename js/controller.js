@@ -369,8 +369,8 @@ function setQrCode(dni) {
   var qr64 = new Image()
 
   var qrcode = new QRCode(qrdiv, {
-    width: 168,
-    height: 168,
+    width: 244,
+    height: 246,
     correctLevel: QRCode.CorrectLevel.L,
   })
 
@@ -384,7 +384,7 @@ function setQrCode(dni) {
   ctx = canvas.getContext("2d")
 
   qr64.onload = function (e) {
-    ctx.drawImage(qr64, 88, 174)
+    ctx.drawImage(qr64, 41, 125)
   }
 }
 
