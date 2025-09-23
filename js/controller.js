@@ -175,7 +175,7 @@ window.onload = () => {
           var name = document.querySelector("#dni").value
           generatePDF(dataURLF, dataURLB, name)
 
-    fetch("localhost:3004/historial", {
+    fetch("http://localhost:3004/historial", {
       method: "POST",
       body: JSON.stringify({
         cedula: document.querySelector("#dni").value,
@@ -185,6 +185,9 @@ window.onload = () => {
         cod_dependencia: '13-3',
         fecha: new Date().toISOString(),
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then((response) => response.json())
     .then((response) => {
       console.log(response);
