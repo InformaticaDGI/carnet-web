@@ -175,7 +175,7 @@ window.onload = () => {
           var name = document.querySelector("#dni").value
           generatePDF(dataURLF, dataURLB, name)
 
-    fetch("http://localhost:3004/historial", {
+    fetch("https://historial-carnets.guarico.gob.ve/historial", {
       method: "POST",
       body: JSON.stringify({
         cedula: document.querySelector("#dni").value,
