@@ -282,7 +282,7 @@ function setText(response, stage, layer) {
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
-    document.querySelector("#cod_dep").value = response.cod_dep === '1' ? `${response.cod_secretaria}-${response.cod_direccion}` : response.cod_dep
+    document.querySelector("#cod_dep").value = response.cod_dep === 1 ? `${response.cod_secretaria}-${response.cod_direccion}` : response.cod_dep
   }
   setPhoto(
     response.hasOwnProperty("cedula_identidad")
