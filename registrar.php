@@ -8,13 +8,12 @@
     date_default_timezone_set('America/Caracas');
     $date = date('Y-m-d');
 
-
     require("conexion.php");
+
     try {
 
     
-    
-         if (isset($_POST)) {
+    if (isset($_POST)) {
     
     $consulta = $pdo->prepare("SELECT * FROM historial WHERE cedula ='" . $cedula . "' AND fecha ='" . $date . "' ");
     $consulta->execute();
@@ -27,7 +26,7 @@
 
     else{
 
-        $query = $pdo->prepare('INSERT INTO public.historial ("cedula", "Nombre", "Dependencia","Cargo","fecha") VALUES (:ci, :nom, :dep, :car, :dat)');
+    $query = $pdo->prepare('INSERT INTO public.historial ("cedula", "Nombre", "Dependencia","Cargo","fecha") VALUES (:ci, :nom, :dep, :car, :dat)');
  
     $query->bindParam(':ci',  $cedula);
     $query->bindParam(':nom', $nombre);

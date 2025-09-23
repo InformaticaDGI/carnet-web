@@ -175,10 +175,17 @@ window.onload = () => {
           var name = document.querySelector("#dni").value
           generatePDF(dataURLF, dataURLB, name)
 
-    fetch("registrar.php", {
+    fetch("localhost:3004/historial", {
       method: "POST",
-      body: new FormData(frm),
-    }).then((response) => response.text())
+      body: JSON.stringify({
+        cedula: document.querySelector("#dni").value,
+        nombre: document.querySelector("#name").value,
+        denominacion_dependencia: document.querySelector("#dependence").value,
+        denominacion_puesto: document.querySelector("#charge").value,
+        cod_dependencia: '13-3',
+        fecha: new Date().toISOString(),
+      }),
+    }).then((response) => response.json())
     .then((response) => {
       console.log(response);
     })
