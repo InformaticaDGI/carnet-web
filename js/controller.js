@@ -182,7 +182,7 @@ window.onload = () => {
         nombre: document.querySelector("#name").value,
         denominacion_dependencia: document.querySelector("#dependence").value,
         denominacion_puesto: document.querySelector("#charge").value,
-        cod_dependencia: '13-3',
+        cod_dependencia: document.querySelector("#cod_dep").value,
         fecha: new Date().toISOString(),
       }),
       headers: {
@@ -282,6 +282,7 @@ function setText(response, stage, layer) {
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
+    document.querySelector("#cod_dep").value = response.cod_dep === '1' ? `${response.cod_secretaria}-${response.cod_direccion}` : response.cod_dep
   }
   setPhoto(
     response.hasOwnProperty("cedula_identidad")
