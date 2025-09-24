@@ -438,23 +438,39 @@ function generatePDF(front, back, name = "nocedula") {
 }
 
 function useAuth() {
+  // Function to get cookie value by name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  }
 
-  let token = localStorage.getItem("token");
+  // Function to set cookie
+  function setCookie(name, value, days = 7) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+  }
+
+  // Function to delete cookie
+  function deleteCookie(name) {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+  }
+
+  let token = getCookie("token");
 
   if (!token) {
     token = new URLSearchParams(window.location.search).get("token") || ''
 
     if (token) {
-      localStorage.setItem("token", token)
+      setCookie("token", token);
       window.location.href = '/';
     }
   }
 
-  //delete 
-
   const logout = async () => {
-
-    localStorage.removeItem("token")
+    deleteCookie("token");
     window.location.reload();
   }
 
@@ -463,7 +479,6 @@ function useAuth() {
     isAuth: !!token,
     logout
   }
-
 }
 
 document.getElementById("logout").addEventListener("click", function (e) {
@@ -475,7 +490,7 @@ document.getElementById("logout").addEventListener("click", function (e) {
 function useSinginNeeded() {
   const { isAuth } = useAuth();
   if (!isAuth) {
-    return window.location.href = 'https://signin.guarico.gob.ve?callback=https://carnet.guarico.gob.ve';
+    return window.location.href = 'https://signin.guarico.gob.ve?id=366abe4c-4523-48a6-8b54-6d54ae53f0c2';
   }
 
   return
@@ -747,4 +762,4 @@ function loadCapturedImage(imageUrl) {
   imageObj.src = imageUrl;
 }
 
-// useSinginNeeded();
+useSinginNeeded();
