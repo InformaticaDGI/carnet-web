@@ -180,8 +180,8 @@ window.onload = () => {
       body: JSON.stringify({
         cedula: document.querySelector("#dni").value,
         nombre: document.querySelector("#name").value,
-        denominacion_dependencia: document.querySelector("#dependence").value,
-        denominacion_puesto: document.querySelector("#charge").value,
+        denominacion_dependencia: document.querySelector("#dependenceName").value,
+        denominacion_puesto: document.querySelector("#chargeName").value,
         cod_dependencia: document.querySelector("#cod_dep").value,
         fecha: new Date().toISOString(),
       }),
@@ -279,6 +279,8 @@ function setText(response, stage, layer) {
   var cargo = response.demonimacion_puesto
   if (response.hasOwnProperty("cedula_identidad")) {
     document.querySelector("#dni").value = response.cedula_identidad
+    document.querySelector("#chargeName").value = cargo
+    document.querySelector("#dependenceName").value = dir
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
