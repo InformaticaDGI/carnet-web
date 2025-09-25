@@ -288,7 +288,7 @@ function setText(response, stage, layer) {
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
-    document.querySelector("#cod_dep").value = response.cod_dep === 1 ? `${response.cod_secretaria}-${response.cod_direccion}` : response.cod_dep
+    document.querySelector("#cod_dep").value = getCompleteDependenceCode(response.cod_dep, response.cod_secretaria, response.cod_direccion)
   }
   setPhoto(
     response.hasOwnProperty("cedula_identidad")
@@ -763,4 +763,73 @@ function loadCapturedImage(imageUrl) {
   imageObj.src = imageUrl;
 }
 
-useSinginNeeded();
+//useSinginNeeded();
+
+/**
+ * Mapper que replica la lógica del SQL para extraer el código de dependencia
+ * Basado en la consulta sqlQuerySec del sistema SISAP
+ */
+function getDependenceCode(cod_dep, cod_secretaria, cod_direccion) {
+  // Si cod_dep no es 1, devolver el valor original
+  if (cod_dep?.toString() !== '1') {
+    return cod_dep;
+  }
+
+  // Lógica para secretarías (primera parte del UNION en el SQL)
+  if (cod_secretaria < '10') {
+    return `0${cod_secretaria}-00`;
+  } else {
+    return `${cod_secretaria}-00`;
+  }
+}
+
+/**
+ * Mapper para direcciones específicas (segunda parte del UNION en el SQL)
+ * Replica la lógica de las direcciones con combinaciones específicas
+ */
+function getDirectionCode(cod_secretaria, cod_direccion) {
+  // Validar las combinaciones específicas del SQL
+  const validCombinations = [
+    { secretaria: 1, direcciones: [3, 5] },
+    { secretaria: 10, direcciones: [8, 9] },
+    { secretaria: 13, direcciones: [2, 3, 4, 5, 8] },
+    { secretaria: 15, direcciones: [1, 2, 4, 8, 9] }
+  ];
+
+  // Verificar si la combinación es válida
+  const isValidCombination = validCombinations.some(combo => 
+    combo.secretaria === parseInt(cod_secretaria) && 
+    combo.direcciones.includes(parseInt(cod_direccion))
+  );
+
+  if (!isValidCombination) {
+    return null; // No devolver código si no cumple las condiciones
+  }
+
+  // Aplicar la misma lógica de formato que en el SQL
+  if (cod_secretaria < '10') {
+    return `0${cod_secretaria}-${cod_direccion}`;
+  } else {
+    return `${cod_secretaria}-${cod_direccion}`;
+  }
+}
+
+/**
+ * Mapper completo que combina ambas lógicas
+ * Replica exactamente la lógica del SQL sqlQuerySec
+ */
+function getCompleteDependenceCode(cod_dep, cod_secretaria, cod_direccion) {
+  // Si cod_dep no es 1, devolver el valor original
+  if (cod_dep?.toString() !== '1') {
+    return cod_dep;
+  }
+
+  // Primero intentar con la lógica de direcciones específicas
+  const directionCode = getDirectionCode(cod_secretaria, cod_direccion);
+  if (directionCode) {
+    return directionCode;
+  }
+
+  // Si no cumple las condiciones de direcciones, usar lógica de secretarías
+  return getDependenceCode(cod_dep, cod_secretaria, cod_direccion);
+}
