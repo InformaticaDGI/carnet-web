@@ -1,121 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <!-- CSS only --> 
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <!-- CSS only -->
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <!-- CSS only -->
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
 
-  <body>
-    <div class="canvases">
-      <div class="btn-float">
-        <!-- Historial + -->
-        <form action="../historial/src/index.html" method="POST">
-          <input class="invisible" type="text" name="dni2" id="dni2" hidden>
-          <input class="invisible" type="text" name="cod_dep" id="cod_dep" hidden>
-          <input class="invisible" type="text" name="dependenceName" id="dependenceName" hidden>
-          <input class="invisible" type="text" name="chargeName" id="chargeName" hidden>
-          <br>
-          <input type="submit" class="btn " value="Historial +">
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <!-- CSS only -->
+</head>
 
-        </form>
-        
-       
-      </div>
-      <div id="k-container"></div>
-      &nbsp;
-      <canvas id="back">as</canvas>
+<body>
+  <div class="canvases">
+    <div class="btn-float">
+      <!-- Historial + -->
+      <form action="../historial/src/index.html" method="POST">
+        <input class="invisible" type="text" name="dni2" id="dni2" hidden>
+        <input class="invisible" type="text" name="cod_dep" id="cod_dep" hidden>
+        <input class="invisible" type="text" name="dependenceName" id="dependenceName" hidden>
+        <input class="invisible" type="text" name="chargeName" id="chargeName" hidden>
+        <br>
+        <input type="submit" class="btn " value="Historial +">
+
+      </form>
+
+
     </div>
-    <div id="qrcode" style="display: none"></div>
+    <div id="k-container"></div>
+    &nbsp;
+    <canvas id="back">as</canvas>
+  </div>
+  <div id="qrcode" style="display: none"></div>
 
-    <div id="toolbar" class="container" style="margin: 10px">
-      <div class="in-div">
-        <form id="frm">
-          <label for="">Secreataria</label>
-          <input type="checkbox" id="isSecre" />
-          <br />
-          <textarea
-            type="text"
-            id="dni"
-            name="dni"
-            placeholder="Cedula"
-          ></textarea>
-          <br />
-          <textarea
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Nombre"
-          ></textarea>
-          <br />
-          <textarea
-            type="text"
-            id="dependence"
-            name="dependence"
-            placeholder="Dependencia"
-          ></textarea>
-          <br />
-          <textarea
-            type="text"
-            id="charge"
-            name="charge"
-            placeholder="Cargo"
-          ></textarea>
-        </form>
-        <br />
-        <button class="btn" id="getData">Buscar</button>
-        <br />
-        <button class="btn" id="img-to-top">Imagen al frente</button>
-        <br />
-        
-        <!-- Camera Preview Box -->
-        <div id="camera-container" style="display: none; margin: 10px 0; border: 2px solid #007bff; border-radius: 8px; padding: 10px; background: #f8f9fa;">
-          <div style="text-align: center; margin-bottom: 10px;">
-            <strong>📷 Cámara</strong>
+  <div id="toolbar" class="container" style="margin: 10px">
+    <div class="in-div">
+      <form id="frm">
+        <div class="form-check">
+          <div class="form-check-item">
+            <input type="radio" name="option" id="isDependence" />
+            <label for="isDependence">Dependencia</label>
           </div>
-          
-          <!-- Background Color Selector -->
-          <div style="margin-bottom: 10px; text-align: center;">
-            <label for="bg-color" style="font-size: 12px; margin-right: 5px;">Fondo:</label>
-            <select id="bg-color" style="padding: 2px 5px; border-radius: 3px; border: 1px solid #ccc;">
-              <option value="transparent">Original</option>
-              <option value="#ffffff">Blanco</option>
-              <option value="#f0f0f0">Gris Claro</option>
-              <option value="#e0e0e0">Gris</option>
-              <option value="#000000">Negro</option>
-              <option value="#0066cc">Azul</option>
-              <option value="#cc0000">Rojo</option>
-              <option value="#00cc00">Verde</option>
-            </select>
+          <div class="form-check-item">
+            <input type="radio" name="option" id="isSecre" />
+            <label for="isSecre">Secreataria</label>
           </div>
-          
-          <video id="camera-preview" style="width: 100%; max-width: 300px; height: 200px; background: #000; border-radius: 4px;"></video>
-          <div style="text-align: center; margin-top: 10px;">
-            <button class="btn btn-success" id="capture-photo" style="margin-right: 10px;">Capturar</button>
-            <button class="btn btn-secondary" id="stop-camera">Cerrar</button>
+          <div class="form-check-item">
+            <input type="radio" name="option" id="isDirection" />
+            <label for="isDirection">Dirección</label>
           </div>
         </div>
-        <button class="btn" id="camera-capture">📷 Tomar Foto</button>
         <br />
-        <button class="btn" id="download">Descargar</button>
+        <textarea type="text" id="dni" name="dni" placeholder="Cedula"></textarea>
         <br />
-        <button class="btn" id="logout">Cerrar Sesión</button>
+        <textarea type="text" id="name" name="name" placeholder="Nombre"></textarea>
+        <br />
+        <textarea type="text" id="dependence" name="dependence" placeholder="Dependencia"></textarea>
+        <br />
+        <textarea type="text" id="charge" name="charge" placeholder="Cargo"></textarea>
+      </form>
+      <br />
+      <button class="btn" id="getData">Buscar</button>
+      <br />
+      <button class="btn" id="img-to-top">Imagen al frente</button>
+      <br />
+
+      <!-- Camera Preview Box -->
+      <div id="camera-container"
+        style="display: none; margin: 10px 0; border: 2px solid #007bff; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+        <div style="text-align: center; margin-bottom: 10px;">
+          <strong>📷 Cámara</strong>
+        </div>
+
+        <!-- Background Color Selector -->
+        <div style="margin-bottom: 10px; text-align: center;">
+          <label for="bg-color" style="font-size: 12px; margin-right: 5px;">Fondo:</label>
+          <select id="bg-color" style="padding: 2px 5px; border-radius: 3px; border: 1px solid #ccc;">
+            <option value="transparent">Original</option>
+            <option value="#ffffff">Blanco</option>
+            <option value="#f0f0f0">Gris Claro</option>
+            <option value="#e0e0e0">Gris</option>
+            <option value="#000000">Negro</option>
+            <option value="#0066cc">Azul</option>
+            <option value="#cc0000">Rojo</option>
+            <option value="#00cc00">Verde</option>
+          </select>
+        </div>
+
+        <video id="camera-preview"
+          style="width: 100%; max-width: 300px; height: 200px; background: #000; border-radius: 4px;"></video>
+        <div style="text-align: center; margin-top: 10px;">
+          <button class="btn btn-success" id="capture-photo" style="margin-right: 10px;">Capturar</button>
+          <button class="btn btn-secondary" id="stop-camera">Cerrar</button>
+        </div>
       </div>
+      <button class="btn" id="camera-capture">📷 Tomar Foto</button>
+      <br />
+      <button class="btn" id="download">Descargar</button>
+      <br />
+      <button class="btn" id="logout">Cerrar Sesión</button>
     </div>
-  </body>
-  <!-- JavaScript Bundle with Popper -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"
-  ></script>
-  <script type="text/javascript" src="./js/konva.min.js"></script>
-  <script type="text/javascript" src="./js/qrcode.min.js"></script>
-  <script type="text/javascript" src="./js/controller.js"></script>
-  <script type="text/javascript" src="./js/jspdf.min.js"></script>
-  <!-- JavaScript Bundle with Popper -->
+  </div>
+</body>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./js/konva.min.js"></script>
+<script type="text/javascript" src="./js/qrcode.min.js"></script>
+<script type="text/javascript" src="./js/controller.js"></script>
+<script type="text/javascript" src="./js/jspdf.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+
 </html>

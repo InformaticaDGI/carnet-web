@@ -42,7 +42,6 @@ body{
 	margin-bottom: 5px;
 }
 .btn{
-	padding: 10px;
 	background: rgb(5, 56, 78);
 	border: none;
 	color:white;
@@ -85,4 +84,17 @@ body{
 	text-shadow: 1px 1px 1px black;
 	border-radius: 10%;
 
+}
+
+.form-check{
+	display: flex;
+	flex-flow: column;
+	align-items: start;
+	padding-left: 0;
+}
+.form-check label{
+	margin-right: 10px;
+}
+.form-check input{
+	margin-right: 10px;
 }

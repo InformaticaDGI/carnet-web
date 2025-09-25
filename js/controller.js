@@ -1,4 +1,5 @@
-const HOST = "https://api-carnet.guarico.gob.ve/"
+const HOST_API = "https://api-sisap-querys.guarico.gob.ve/hoja_vida/consulta/"
+const HOST_CARNET = "https://api-carnet.guarico.gob.ve/"
 const color = "black"
 
 window.onload = () => {
@@ -278,7 +279,7 @@ function setText(response, stage, layer) {
 
   var dir = document.getElementById("isSecre").checked
     ? response.deno_cod_secretaria
-    : response.deno_cod_direccion
+    : document.getElementById("isDependence").checked ? response.denominacion_dependencia : response.deno_cod_direccion
   var cargo = response.demonimacion_puesto
   if (response.hasOwnProperty("cedula_identidad")) {
     document.querySelector("#dni").value = response.cedula_identidad
@@ -304,8 +305,8 @@ function setText(response, stage, layer) {
     .get("#dependence")
     .text(
       document.getElementById("isSecre").checked
-        ? response.deno_cod_secretaria
-        : response.deno_cod_direccion
+      ? response.deno_cod_secretaria
+      : document.getElementById("isDependence").checked ? response.denominacion_dependencia : response.deno_cod_direccion
     )
   stage.get("#tr-dependence").forceUpdate()
   layer.moveToTop()
@@ -355,7 +356,7 @@ function setPhoto(image, stage) {
     stage.add(layer)
   }
 
-  fetch(`${HOST}photo/${image}`, {
+  fetch(`${HOST_CARNET}photo/${image}`, {
     headers: {
       "Response-Type": "arraybuffer",
     },
@@ -371,7 +372,7 @@ function setPhoto(image, stage) {
 
 function loadData() {
   var dni = document.querySelector("#dni").value
-  return fetch(`${HOST}client/${dni}`, {
+  return fetch(`${HOST_API}/${dni}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -762,4 +763,4 @@ function loadCapturedImage(imageUrl) {
   imageObj.src = imageUrl;
 }
 
-useSinginNeeded();
+//useSinginNeeded();
