@@ -763,4 +763,4 @@ function loadCapturedImage(imageUrl) {
   imageObj.src = imageUrl;
 }
 
-//useSinginNeeded();
+useSinginNeeded();
