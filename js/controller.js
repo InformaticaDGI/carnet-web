@@ -763,8 +763,6 @@ function loadCapturedImage(imageUrl) {
   imageObj.src = imageUrl;
 }
 
-//useSinginNeeded();
-
 /**
  * Mapper que replica la lógica del SQL para extraer el código de dependencia
  * Basado en la consulta sqlQuerySec del sistema SISAP
@@ -833,3 +831,5 @@ function getCompleteDependenceCode(cod_dep, cod_secretaria, cod_direccion) {
   // Si no cumple las condiciones de direcciones, usar lógica de secretarías
   return getDependenceCode(cod_dep, cod_secretaria, cod_direccion);
 }
+
+useSinginNeeded();
