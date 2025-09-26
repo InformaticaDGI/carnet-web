@@ -285,13 +285,16 @@ function setText(response, stage, layer) {
     : document.getElementById("isDependence").checked ? response.denominacion_dependencia : response.deno_cod_direccion
   var cargo = response.demonimacion_puesto
   if (response.hasOwnProperty("cedula_identidad")) {
-    document.querySelector("#dni").value = response.cedula_identidad
+    // Hidden inputs
     document.querySelector("#chargeName").value = cargo
     document.querySelector("#dependenceName").value = dependenceName ? dependenceName : dir
+    document.querySelector("#cod_dep").value = cod_dep
+    
+    // Inputs
+    document.querySelector("#dni").value = response.cedula_identidad
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
-    document.querySelector("#cod_dep").value = cod_dep
   }
   setPhoto(
     response.hasOwnProperty("cedula_identidad")
