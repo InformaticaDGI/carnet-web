@@ -277,6 +277,9 @@ function newText(
 function setText(response, stage, layer) {
   //response.deno_cod_secretaria
 
+  const cod_dep = getCompleteDependenceCode(response.cod_dep, response.cod_secretaria, response.cod_direccion)
+  const dependenceName = getDependenceName(cod_dep)
+
   var dir = document.getElementById("isSecre").checked
     ? response.deno_cod_secretaria
     : document.getElementById("isDependence").checked ? response.denominacion_dependencia : response.deno_cod_direccion
@@ -284,11 +287,11 @@ function setText(response, stage, layer) {
   if (response.hasOwnProperty("cedula_identidad")) {
     document.querySelector("#dni").value = response.cedula_identidad
     document.querySelector("#chargeName").value = cargo
-    document.querySelector("#dependenceName").value = dir
+    document.querySelector("#dependenceName").value = dependenceName ? dependenceName : dir
     document.querySelector("#charge").value = cargo
     document.querySelector("#name").value = response.nombre
     document.querySelector("#dependence").value = dir
-    document.querySelector("#cod_dep").value = getCompleteDependenceCode(response.cod_dep, response.cod_secretaria, response.cod_direccion)
+    document.querySelector("#cod_dep").value = cod_dep
   }
   setPhoto(
     response.hasOwnProperty("cedula_identidad")
@@ -830,6 +833,15 @@ function getCompleteDependenceCode(cod_dep, cod_secretaria, cod_direccion) {
 
   // Si no cumple las condiciones de direcciones, usar lógica de secretarías
   return getDependenceCode(cod_dep, cod_secretaria, cod_direccion);
+}
+
+
+function getDependenceName(cod_dep) {
+
+  const listDependences = [{"value":"15-4","label":"COMISIÓN ÚNICA DE CONTRATACIONES"},{"value":"1011","label":"SUPERINTENDENCIA DE ADMINISTRACIÓN TRIBUTARIA DEL ESTADO BOLIVARIANO DE GUARICO (SUATEBG)"},{"value":"1040","label":"FONDO DE EFICIENCIA PARA EL DESARROLLO DEL ESTADO BOLIVARIANO DE GUARICO"},{"value":"03-00","label":"SECRETARÍA DE PLANIFICACIÓN Y PRESUPUESTO"},{"value":"1003","label":"JUNTA DIRECTIVA"},{"value":"13-00","label":"SECRETARÍA DE DESPACHO DEL GOBERNADOR"},{"value":"05-00","label":"SECRETARÍA DE PROTECCIÓN SOCIAL"},{"value":"15-2","label":"DIRECCIÓN GENERAL DE AUDITORIA INTERNA"},{"value":"1015","label":"PROCURADURIA DEL ESTADO BOLIVARIANO DE GUÁRICO"},{"value":"01-00","label":"SECRETARÍA GENERAL DE GOBIERNO"},{"value":"17-00","label":"SECRETARIA DE INSPECCIÓN Y CONTROL DE LA GESTIÓN DE GOBIERNO"},{"value":"01-3","label":"DIRECCIÓN GENERAL DE TALENTO HUMANO"},{"value":"13-3","label":"SECRETARÍA DE DESPACHO DEL GOBERNADOR"},{"value":"22-00","label":"SECRETARIA DE INFORMACIÓN Y COMUNICACIÓN"},{"value":"15-8","label":"DIRECCIÓN GENERAL DE ATENCIÓN AL CIUDADANO"},{"value":"1007","label":"CONSEJO ESTADAL DE PLANIFICACIÓN Y COORDINACIÓN DE POLÍTICAS PÚBLICAS (COPLAN-GUÁRICO)"},{"value":"1022","label":"FUNDACIÓN SISTEMA BOLIVARIANO DE COMUNICACIÓN E INFORMACIÓN GUÁRICO"},{"value":"17-00","label":"SECRETARIO DE INSPECCION Y CONTROL DE LA GESTION DE GOBIERNO"},{"value":"1046","label":"SOCIEDAD DE GARANTIAS RECIPROCAS"},{"value":"15-1","label":"CONSULTORIA JURIDICA"},{"value":"01-5","label":"DIRECCIÓN DE ARCHIVO CENTRAL"},{"value":"02-00","label":"SECRETARÍA DE FINANZAS"},{"value":"1003","label":"INSTITUTO REGIONAL DEL DEPORTE DEL EDO. BOLIVARIANO DE GUÁRICO (IRDEBG)"},{"value":"15-00","label":"DESPACHO DEL GOBERNADOR"},{"value":"13-8","label":"DIRECCIÓN DE RELACIONES INSTITUCIONALES"},{"value":"13-3","label":"DIRECCIÓN GENERAL DE INFORMATICA"}]
+
+  const dependence = listDependences.find(dependence => dependence.value === cod_dep);
+  return dependence ? dependence.label : null;
 }
 
 useSinginNeeded();
